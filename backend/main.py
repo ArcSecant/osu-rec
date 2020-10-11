@@ -18,7 +18,7 @@ inv_map = {v: k for k, v in maps_dict.items()}
 
 # user_items_l = user_items.tolil()
 # for i in tqdm(range(user_items_l.shape[0])):
-#     user_items_l[i] *= ((1/user_items_l[i].sum())**0.05)
+#     user_items_l[i] *= ((1/user_items_l[i].sum())**0.5)
 # items_id = user_items_l.tocoo()
 # sparse.save_npz('backend/model/user_items_weighted.npz', items_id)
 # model = implicit.lmf.LogisticMatrixFactorization(factors=32)
