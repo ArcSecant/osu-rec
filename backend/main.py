@@ -25,6 +25,20 @@ def recommendations():
 
     return {'output': 'https://osu.ppy.sh/beatmapsets/' + str(inv_map[rec])}
 
+@app.route('/beatmap', methods=['POST'])
+def similar_maps():
+    global model, user_items, inv_map, id_list
+
+    mapset_id = request.json['input']
+    similar_maps = model.similar_items(maps_dict[int(mapset_id)])[1:]
+    rec = random.choice(similar_maps)[0]
+
+    return {'output': 'https://osu.ppy.sh/beatmapsets/' + str(inv_map[rec])}
+
 @app.route('/')
 def index():
     return render_template('index.html')
+
+@app.route('/maps')
+def maps():
+    return render_template('maps.html')
