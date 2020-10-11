@@ -10,7 +10,7 @@ from tqdm import tqdm
 
 app = Flask(__name__)
 
-# model = pickle.load(open('backend/model/finalized_model.sav', 'rb'))
+model = pickle.load(open('backend/model/finalized_model_weighted.sav', 'rb'))
 user_items = sparse.load_npz('backend/model/user_items_weighted.npz')
 maps_dict = pickle.load(open('backend/model/maps_dict.sav', 'rb'))
 id_list = pickle.load(open('backend/model/id_list.sav', 'rb'))
@@ -21,8 +21,9 @@ inv_map = {v: k for k, v in maps_dict.items()}
 #     user_items_l[i] *= ((1/user_items_l[i].sum())**0.05)
 # items_id = user_items_l.tocoo()
 # sparse.save_npz('backend/model/user_items_weighted.npz', items_id)
-model = implicit.lmf.LogisticMatrixFactorization(factors=32)
-model.fit(user_items)
+# model = implicit.lmf.LogisticMatrixFactorization(factors=32)
+# model.fit(user_items)
+# pickle.dump(model, open('backend/model/finalized_model_weighted.sav', 'wb'))
 
 @app.route('/user', methods=['POST'])
 def recommendations():
