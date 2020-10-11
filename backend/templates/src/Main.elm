@@ -76,7 +76,7 @@ update msg model =
 sendData : String -> Cmd Msg
 sendData input =
     Http.post
-        { url = "/user"
+        { url = "/beatmap"
         , body = Http.jsonBody (inputEncoder input)
         , expect = Http.expectJson ReceivedData outputDecoder
         }
@@ -147,7 +147,7 @@ view model =
                         Just <|
                             Input.placeholder
                                 []
-                                (El.text "User ID")
+                                (El.text "Beatmap ID")
                     }
                 , Input.button
                     []
