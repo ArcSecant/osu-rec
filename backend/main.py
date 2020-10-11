@@ -21,8 +21,8 @@ inv_map = {v: k for k, v in maps_dict.items()}
 #     user_items_l[i] *= ((1/user_items_l[i].sum())**0.05)
 # items_id = user_items_l.tocoo()
 # sparse.save_npz('backend/model/user_items_weighted.npz', items_id)
-# model = implicit.lmf.LogisticMatrixFactorization(factors=32)
-# model.fit(items_id)
+model = implicit.lmf.LogisticMatrixFactorization(factors=32, regularization=5)
+model.fit(user_items)
 
 @app.route('/user', methods=['POST'])
 def recommendations():
