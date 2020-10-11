@@ -29,7 +29,7 @@ def recommendations():
     global model, user_items, inv_map, id_list
     
     user_id = request.json['input']
-    recommendations = model.recommend(id_list.index(int(user_id)), user_items.T.tocsr(), N=10)
+    recommendations = model.recommend(id_list.index(int(user_id)), user_items.T.tocsr(), N=25)
     rec = random.choice(recommendations)[0]
 
     return {'output': 'https://osu.ppy.sh/beatmapsets/' + str(inv_map[rec])}
@@ -39,7 +39,7 @@ def similar_maps():
     global model, user_items, inv_map, id_list
 
     mapset_id = request.json['input']
-    similar_maps = model.similar_items(maps_dict[int(mapset_id)], N=10)[1:]
+    similar_maps = model.similar_items(maps_dict[int(mapset_id)], N=25)[1:]
     rec = random.choice(similar_maps)[0]
 
     return {'output': 'https://osu.ppy.sh/beatmapsets/' + str(inv_map[rec])}
