@@ -3,6 +3,9 @@ module Main exposing (main)
 import Browser
 import Element exposing (..)
 import Element.Input as Input
+import Element.Background as Background
+import Element.Border as Border
+import Element.Font as Font
 import Html
 import Http
 import Json.Decode as JD
@@ -36,6 +39,13 @@ initialModel =
     , error = ""
     }
 
+clickableAttributes : List (Attribute msg)
+clickableAttributes =
+    [ padding 11
+    , Border.width 2
+    , Border.color <| rgb255 0x50 0x50 0x50
+    , Font.color <| rgb255 0x00 0x00 0x00
+    ]
 
 
 -- UPDATE
@@ -150,7 +160,7 @@ view model =
                                 (text "User ID")
                     }
                 , Input.button
-                    []
+                    clickableAttributes
                     { label = text "Click"
                     , onPress = Just SendData
                     }
@@ -163,11 +173,13 @@ view model =
             , text model.error
             , row
                 [ spacing 20 ]
-                [ link []
+                [ link
+                    clickableAttributes
                     { url = "/maps"
                     , label = text "Find similar maps"
                     }
-                , link []
+                , link
+                    clickableAttributes
                     { url = "/pp"
                     , label = text "Find PP maps"
                     }
