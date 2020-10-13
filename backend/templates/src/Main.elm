@@ -41,9 +41,10 @@ initialModel =
 
 clickableAttributes : List (Attribute msg)
 clickableAttributes =
-    [ padding 11
-    , Border.width 2
-    , Border.color <| rgb255 0x50 0x50 0x50
+    [ padding 12
+    , Border.width 1
+    , Border.rounded 3
+    , Border.color <| rgb255 0xC0 0xC0 0xC0
     , Font.color <| rgb255 0x00 0x00 0x00
     ]
 
