@@ -1,7 +1,7 @@
 module Main exposing (main)
 
 import Browser
-import Element as El
+import Element exposing (..)
 import Element.Input as Input
 import Html
 import Http
@@ -76,7 +76,7 @@ update msg model =
 sendData : String -> Cmd Msg
 sendData input =
     Http.post
-        { url = "/beatmap"
+        { url = "/api/user"
         , body = Http.jsonBody (inputEncoder input)
         , expect = Http.expectJson ReceivedData outputDecoder
         }
@@ -125,17 +125,17 @@ decodeError error =
 
 view : Model -> Html.Html Msg
 view model =
-    El.layout
-        [ El.height El.fill
-        , El.width El.fill
+    layout
+        [ height fill
+        , width fill
         ]
-        (El.column
-            [ El.centerX
-            , El.centerY
-            , El.spacing 20
+        (column
+            [ centerX
+            , centerY
+            , spacing 20
             ]
-            [ El.row
-                [ El.spacing 20 ]
+            [ row
+                [ spacing 20 ]
                 [ Input.text
                     []
                     { onChange = ChangedInput
@@ -147,18 +147,20 @@ view model =
                         Just <|
                             Input.placeholder
                                 []
-                                (El.text "Beatmap ID")
+                                (text "User ID")
                     }
                 , Input.button
                     []
-                    { label = El.text "Click"
+                    { label = text "Click"
                     , onPress = Just SendData
                     }
                 ]
-            , El.text "Recommendation"
-            , El.text model.output
-            , El.text "Error"
-            , El.text model.error
+            , text "Recommendation"
+            , newTabLink []
+                { url = model.output
+                , label = text model.output
+                }
+            , text model.error
             ]
         )
 

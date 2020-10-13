@@ -26,7 +26,13 @@ inv_map = {v: k for k, v in maps_dict.items()}
 # model.fit(items_id)
 # pickle.dump(model, open('backend/model/finalized_model_weighted.sav', 'wb'))
 
-@app.route('/user', methods=['POST'])
+model_pp = pickle.load(open('backend/model/finalized_model_pp.sav', 'rb'))
+id_maps_pp = sparse.load_npz('backend/model/id_maps.npz')
+maps_dict_pp = pickle.load(open('backend/model/maps_dict_pp.sav', 'rb'))
+id_list_pp = pickle.load(open('backend/model/id_list_10k.sav', 'rb'))
+inv_map_pp = {v: k for k, v in maps_dict_pp.items()}
+
+@app.route('/api/user', methods=['POST'])
 def recommendations():
     global model, user_items, inv_map, id_list
     
@@ -36,7 +42,7 @@ def recommendations():
 
     return {'output': 'https://osu.ppy.sh/beatmapsets/' + str(inv_map[rec])}
 
-@app.route('/beatmap', methods=['POST'])
+@app.route('/api/maps', methods=['POST'])
 def similar_maps():
     global model, user_items, inv_map, id_list
 
@@ -46,6 +52,16 @@ def similar_maps():
 
     return {'output': 'https://osu.ppy.sh/beatmapsets/' + str(inv_map[rec])}
 
+@app.route('/api/pp', methods=['POST'])
+def pp_rec():
+    global model_pp, id_maps_pp, inv_map_pp, id_list_pp
+
+    user_id = request.json['input']
+    pp_recs = model_pp.recommend(id_list_pp.index(int(user_id)), id_maps_pp, N=50)
+    rec = random.choice(pp_recs)[0]
+
+    return {'output': 'https://osu.ppy.sh/b/' + str(inv_map_pp[rec])}
+
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -53,3 +69,7 @@ def index():
 @app.route('/maps')
 def maps():
     return render_template('maps.html')
+
+@app.route('/pp')
+def pp():
+    return render_template('pp.html')
