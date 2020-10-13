@@ -6222,7 +6222,7 @@ var $author$project$Main$sendData = function (input) {
 			body: $elm$http$Http$jsonBody(
 				$author$project$Main$inputEncoder(input)),
 			expect: A2($elm$http$Http$expectJson, $author$project$Main$ReceivedData, $author$project$Main$outputDecoder),
-			url: '/api/user'
+			url: '/api/pp_players'
 		});
 };
 var $author$project$Main$update = F2(
@@ -12274,36 +12274,6 @@ var $elm$html$Html$Attributes$href = function (url) {
 		_VirtualDom_noJavaScriptUri(url));
 };
 var $elm$html$Html$Attributes$rel = _VirtualDom_attribute('rel');
-var $mdgriffith$elm_ui$Element$link = F2(
-	function (attrs, _v0) {
-		var url = _v0.url;
-		var label = _v0.label;
-		return A4(
-			$mdgriffith$elm_ui$Internal$Model$element,
-			$mdgriffith$elm_ui$Internal$Model$asEl,
-			$mdgriffith$elm_ui$Internal$Model$NodeName('a'),
-			A2(
-				$elm$core$List$cons,
-				$mdgriffith$elm_ui$Internal$Model$Attr(
-					$elm$html$Html$Attributes$href(url)),
-				A2(
-					$elm$core$List$cons,
-					$mdgriffith$elm_ui$Internal$Model$Attr(
-						$elm$html$Html$Attributes$rel('noopener noreferrer')),
-					A2(
-						$elm$core$List$cons,
-						$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$shrink),
-						A2(
-							$elm$core$List$cons,
-							$mdgriffith$elm_ui$Element$height($mdgriffith$elm_ui$Element$shrink),
-							A2(
-								$elm$core$List$cons,
-								$mdgriffith$elm_ui$Internal$Model$htmlClass($mdgriffith$elm_ui$Internal$Style$classes.contentCenterX + (' ' + ($mdgriffith$elm_ui$Internal$Style$classes.contentCenterY + (' ' + $mdgriffith$elm_ui$Internal$Style$classes.link)))),
-								attrs))))),
-			$mdgriffith$elm_ui$Internal$Model$Unkeyed(
-				_List_fromArray(
-					[label])));
-	});
 var $elm$html$Html$Attributes$target = $elm$html$Html$Attributes$stringProperty('target');
 var $mdgriffith$elm_ui$Element$newTabLink = F2(
 	function (attrs, _v0) {
@@ -13395,36 +13365,6 @@ var $author$project$Main$view = function (model) {
 								url: model.output
 							}),
 							$mdgriffith$elm_ui$Element$text(model.error)
-						])),
-					A2(
-					$mdgriffith$elm_ui$Element$row,
-					_List_fromArray(
-						[
-							$mdgriffith$elm_ui$Element$spacing(20)
-						]),
-					_List_fromArray(
-						[
-							A2(
-							$mdgriffith$elm_ui$Element$link,
-							$author$project$Main$clickableAttributes,
-							{
-								label: $mdgriffith$elm_ui$Element$text('Find similar maps'),
-								url: '/maps'
-							}),
-							A2(
-							$mdgriffith$elm_ui$Element$link,
-							$author$project$Main$clickableAttributes,
-							{
-								label: $mdgriffith$elm_ui$Element$text('Find PP maps'),
-								url: '/pp'
-							}),
-							A2(
-							$mdgriffith$elm_ui$Element$link,
-							$author$project$Main$clickableAttributes,
-							{
-								label: $mdgriffith$elm_ui$Element$text('Find similar players'),
-								url: '/pp_players'
-							})
 						]))
 				])));
 };

@@ -62,6 +62,16 @@ def pp_rec():
 
     return {'output': 'https://osu.ppy.sh/b/' + str(inv_map_pp[rec])}
 
+@app.route('/api/pp_players', methods=['POST'])
+def similar_players():
+    global model_pp, id_maps_pp, inv_map_pp, id_list_pp
+
+    user_id = request.json['input']
+    similar_players = model_pp.similar_users(id_list_pp.index(int(user_id)), N=10)[1:]
+    rec = random.choice(similar_players)[0]
+
+    return {'output': 'https://osu.ppy.sh/users/' + str(id_list_pp[rec])}
+
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -73,3 +83,7 @@ def maps():
 @app.route('/pp')
 def pp():
     return render_template('pp.html')
+
+@app.route('/pp_players')
+def pp_players():
+    return render_template('pp_players.html')

@@ -145,33 +145,37 @@ view model =
             , centerY
             , spacing 20
             ]
-            [ row
-                [ spacing 20 ]
-                [ Input.text
-                    []
-                    { onChange = ChangedInput
-                    , text = model.input
-                    , label =
-                        Input.labelHidden
-                            "Input"
-                    , placeholder =
-                        Just <|
-                            Input.placeholder
-                                []
-                                (text "User ID")
+            [ column
+                [ spacing 20
+                , centerX ]
+                [ row
+                    [ spacing 20 ]
+                    [ Input.text
+                        []
+                        { onChange = ChangedInput
+                        , text = model.input
+                        , label =
+                            Input.labelHidden
+                                "Input"
+                        , placeholder =
+                            Just <|
+                                Input.placeholder
+                                    []
+                                    (text "User ID")
+                        }
+                    , Input.button
+                        clickableAttributes
+                        { label = text "Click"
+                        , onPress = Just SendData
+                        }
+                    ]
+                , text "Recommendation"
+                , newTabLink []
+                    { url = model.output
+                    , label = text model.output
                     }
-                , Input.button
-                    clickableAttributes
-                    { label = text "Click"
-                    , onPress = Just SendData
-                    }
+                , text model.error
                 ]
-            , text "Recommendation"
-            , newTabLink []
-                { url = model.output
-                , label = text model.output
-                }
-            , text model.error
             , row
                 [ spacing 20 ]
                 [ link
@@ -183,6 +187,11 @@ view model =
                     clickableAttributes
                     { url = "/pp"
                     , label = text "Find PP maps"
+                    }
+                , link
+                    clickableAttributes
+                    { url = "/pp_players"
+                    , label = text "Find similar players"
                     }
                 ]
             ]
