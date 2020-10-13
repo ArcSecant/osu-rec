@@ -161,6 +161,17 @@ view model =
                 , label = text model.output
                 }
             , text model.error
+            , row
+                [ spacing 20 ]
+                [ link []
+                    { url = "/maps"
+                    , label = text "Find similar maps"
+                    }
+                , link []
+                    { url = "/pp"
+                    , label = text "Find PP maps"
+                    }
+                ]
             ]
         )
 
