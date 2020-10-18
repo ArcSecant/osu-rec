@@ -16,20 +16,11 @@ maps_dict = pickle.load(open('backend/model/maps_dict.sav', 'rb'))
 id_list = pickle.load(open('backend/model/id_list.sav', 'rb'))
 inv_map = {v: k for k, v in maps_dict.items()}
 
-# user_items_l = user_items.tolil()
-# for i in tqdm(range(user_items_l.shape[0])):
-#     user_items_l[i] *= 1/1.000005**((user_items_l[i].sum() - 200)**2)
-#     # user_items_l[i] *= 1/user_items_l[i].sum()**0.01
-# items_id = user_items_l.tocoo()
-# sparse.save_npz('backend/model/user_items_weighted.npz', items_id)
-# model = implicit.lmf.LogisticMatrixFactorization(factors=32)
-# model.fit(items_id)
-# pickle.dump(model, open('backend/model/finalized_model_weighted.sav', 'wb'))
-
 model_pp = pickle.load(open('backend/model/finalized_model_pp.sav', 'rb'))
-id_maps_pp = sparse.load_npz('backend/model/id_maps.npz')
+id_maps_pp = sparse.load_npz('backend/model/user_items_pp.npz')
+id_maps_pp = id_maps_pp.T.tocsr()
 maps_dict_pp = pickle.load(open('backend/model/maps_dict_pp.sav', 'rb'))
-id_list_pp = pickle.load(open('backend/model/id_list_10k.sav', 'rb'))
+id_list_pp = pickle.load(open('backend/model/id_list_pp.sav', 'rb'))
 inv_map_pp = {v: k for k, v in maps_dict_pp.items()}
 
 @app.route('/api/user', methods=['POST'])
@@ -59,8 +50,15 @@ def pp_rec():
     user_id = request.json['input']
     pp_recs = model_pp.recommend(id_list_pp.index(int(user_id)), id_maps_pp, N=50)
     rec = random.choice(pp_recs)[0]
+    rec = str(inv_map_pp[rec])
+    try:
+        idx = rec.find(next(filter(str.isalpha, rec)))
+    except StopIteration:
+        idx = len(rec)
+    rec_id = rec[:idx]
+    rec_mods = rec[idx:]
 
-    return {'output': 'https://osu.ppy.sh/b/' + str(inv_map_pp[rec])}
+    return {'url': 'https://osu.ppy.sh/b/' + rec_id, 'mods': (rec_mods if rec_mods else 'None')}
 
 @app.route('/api/pp_players', methods=['POST'])
 def similar_players():
